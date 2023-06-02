@@ -10,6 +10,7 @@
         </li>
       </ol>
     </div>
+    <div class="background_shadow"></div>
   </div>
 </template>
 
@@ -31,3 +32,12 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.background_shadow {
+  width: 600px;
+  height: 450px;
+  // background-color: #000000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  margin: 150px 0 0 150px;
+}
+</style>

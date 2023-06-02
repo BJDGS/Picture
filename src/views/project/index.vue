@@ -1,8 +1,11 @@
 <template>
 	<div class="alert-box-item">
 		<div ref="ExportDiv" class="pit">
-			<div class="bigImg-div" @click="toGetImg" :class="{effect: shadow_show}">
+			<div class="bigImg-div" @click="toGetImg">
 				<img class="bigImg" :src=valueUrl v-if="valueUrl">
+			</div>
+			<div v-if="shadow_show" :class="{effect: shadow_show}">
+				<img class="back_img" src="../../assets/600X450.png" alt="">
 			</div>
 		</div>
 		<div class="button">
@@ -112,26 +115,33 @@ export default {
 .alert-box-item {
 	overflow: hidden;
 	.pit {
-		width: 600px;
+		width: 700px;
 		height: 600px;
 		display: flex;
 		justify-content: center;
-		align-items: center;
 		.bigImg-div {
-			width: 500px;
-			height: 500px;
-			/* border-radius: 50px; */
+			width: 600px;
+			height: 450px;
 			overflow: hidden;
 			border: 1px solid #ddd;
+			margin-top: 45px;
 			.bigImg {
 				display: block;
-				width: 500px;
-				height: 500px;
-				/* border-radius: 50px; */
+				width: 600px;
+				height: 450px;
 			}
 		}
-		.effect {
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		// .effect {
+		// 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		// }
+	}
+	.effect {	
+		position: absolute;
+		z-index: -1;
+		.back_img {
+			width: 620px;
+			height: 470px;
+			margin-top: 36px;
 		}
 	}
 	.button {
@@ -162,7 +172,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	right: 100px;
+	right: 30px;
 	top: 100px;
 }
 </style>
