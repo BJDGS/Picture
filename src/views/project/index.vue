@@ -1,20 +1,52 @@
 <template>
 	<div class="alert-box-item">
-		<div class="bigImg-div" @click="toGetImg">
-			<img class="bigImg" :src=valueUrl v-if="valueUrl">
+		<div ref="ExportDiv" class="pit">
+			<div class="bigImg-div" @click="toGetImg" :class="{effect: shadow_show}">
+				<img class="bigImg" :src=valueUrl v-if="valueUrl">
+			</div>
+		</div>
+		<div class="button">
+			<div class="btn shadow" @click="change_shadow">
+				<span>阴  影</span>
+			</div>
+			<div class="btn export" @click="change_export">
+				<span>导  出</span>
+			</div>
+		</div>
+		<div class="others" @click="gotoother">
+			<span>其  他</span>
 		</div>
 	</div>
 </template>
 
 <script>
+import { ExportImg } from '../../vendor/index'
 let inputElement = null
 export default {
 	data() {
 		return {
-			valueUrl: ''
+			valueUrl: '',
+			shadow_show: false,
 		}
 	},
 	methods: {
+		gotoother() {
+			this.$router.push('/others');
+		},
+		change_export() {
+      this.useExportImg()
+    },
+		useExportImg() { // 导出图片
+      ExportImg(this.$refs.ExportDiv, `导出示例`, 'png')
+    },
+		change_shadow() {
+			if (this.shadow_show) {
+				this.shadow_show = false
+			} else {
+				this.shadow_show = true
+			}
+			console.log("if?", this.shadow_show)
+		},
 		toGetImg() {
 			if (inputElement === null) {
 			// 生成文件上传的控件
@@ -41,7 +73,7 @@ export default {
 				console.log(size)
 				// 判断上传文件的大小
 				if (!isLt2M) {
-					this.$message.error('上传头像图片大小不能超过 2MB!')
+					this.$message.error('上传头像图片大小不能超过 20MB!')
 				} else if (files.type.indexOf('image') === -1) { //如果不是图片格式
 					// this.$dialog.toast({ mes: '请选择图片文件' });
 					this.$message.error('请选择图片文件');
@@ -76,23 +108,61 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .alert-box-item {
 	overflow: hidden;
+	.pit {
+		width: 600px;
+		height: 600px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.bigImg-div {
+			width: 500px;
+			height: 500px;
+			/* border-radius: 50px; */
+			overflow: hidden;
+			border: 1px solid #ddd;
+			.bigImg {
+				display: block;
+				width: 500px;
+				height: 500px;
+				/* border-radius: 50px; */
+			}
+		}
+		.effect {
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		}
+	}
+	.button {
+		display: flex;
+		margin-top: 30px;
+		.btn {
+			width: 120px;
+			height: 40px;
+			color: #797979;
+			border-radius: 10px;
+			border: 1px solid #ccc;
+			margin-left: 50px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+		}
+	}
 }
 
-.bigImg-div {
-	width: 500px;
-	height: 500px;
-	border-radius: 50px;
-	overflow: hidden;
-	border: 1px solid #ddd;
-}
-
-.bigImg {
-	display: block;
-	width: 500px;
-	height: 500px;
-	border-radius: 50px;
+.others {
+	width: 200px;
+	height: 50px;
+	color: #797979;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	right: 100px;
+	top: 100px;
 }
 </style>
